@@ -1,0 +1,19 @@
+version: "2"
+services:
+  jboss:
+    build:
+      context: ./jboss
+      dockerfile: Dockerfile
+    volumes:
+      - "./jboss/deployments:/home/user/jboss7/standalone/deployments/"
+  apache:
+    build:
+      context: ./apache
+      dockerfile: Dockerfile
+    volumes:
+      - "./apache/config:/etc/apache2/sites-enabled"
+      - "./apache/public-html:/var/www/html/web"
+    ports:
+      - "80:80"
+    links:
+      - "jboss:jboss"
